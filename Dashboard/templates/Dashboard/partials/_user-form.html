@@ -1,0 +1,32 @@
+<form 
+  action="{{ form_action }}"
+  method="POST"
+>
+{% csrf_token %}   
+
+    {% for campo in form %}
+    <div class="form-content">
+      <div class="form-group">
+        <label for="{{ campo.id_for_label }}">{{ campo.label }}</label>
+        {{ campo }}
+        {{ campo.errors }}
+        {{ campo.help_text }}
+      </div>
+    </div>
+    {% endfor %}
+    {% if form.non_field_errors %}
+    <div class="form-content">
+      <div class="form-group">
+        <div class="message error">
+          {{ form.non_field_errors }}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    <div class="form-content">
+      <div class="form-group">
+        <button class="btn" type="submit">Send</button>
+      </div>
+    </div>
+
+</form>

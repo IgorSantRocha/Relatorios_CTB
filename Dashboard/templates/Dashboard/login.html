@@ -1,0 +1,19 @@
+{% extends 'global/base.html' %}
+
+{% block content %}
+<main class="content">
+  <div class="form-wrapper">
+
+      <h2>Login</h2>
+      {% if user.is_authenticated %}
+        <p>
+          Você está logado como <b>{{ user.first_name }}</b>.<br> 
+          Clique <a href="{% url 'Dashboard:logout' %}">aqui</a> para sair
+        </p>
+      {% else %}
+        {% include 'Dashboard/partials/_user-form.html' %}
+      {% endif %}
+      
+    </div>
+  </main>
+{% endblock content %}

@@ -1,0 +1,68 @@
+{% extends 'global/base.html' %}
+{% block content %}
+<main class="content">
+
+
+    <div class="responsive-table">
+        <table class="contacts-table">
+            <caption class="table-caption">
+                Relatórios
+            </caption>
+            <thead>
+                <tr class="table-row table-row-header">
+                    {% if usuario_adm %}
+                    <th class="table-header">Contratante</th>
+                    {% endif %}
+                    <th class="table-header">Tipo relatório</th>
+                    <th class="table-header">Descrição</th>
+                    {% if usuario_adm %}
+                    <th class="table-header">Ativo</th>
+
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for link in links %}
+                    
+                    <tr class="table-row">
+                        {% if usuario_adm %}
+                        <td class="table-cel">
+                            <a href="{% url 'Dashboard:relatorio' link.id %}" class="table-link">
+                                {{ link.group }}
+                            </a>
+                        </td>
+                        {% endif %}
+                        <td class="table-cel">
+                            <a href="{% url 'Dashboard:relatorio' link.id %}" class="table-link">
+                                {{ link.nome_relatorio }}
+                            </a>
+                        </td>
+                        <td class="table-cel">
+                            {{ link.description }}
+                        </td>
+                        {% if usuario_adm %}
+                        <td class="table-cel">
+                            {% if link.ativo %}
+                            <div>
+                                <input type="checkbox" id="ativo" onclick="return false;" name="ativo" value="ativo" checked/>
+                                <label for="ativo"></label>
+                            </div>
+                            {% else %}
+                                <div>
+                                    <input  type="checkbox" id="ativo"  onclick="return false;" name="ativo" value="ativo" />
+                                    <label for="ativo"></label>
+                                </div>
+                            {% endif %}
+                            
+                        </td>
+                        
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+{% endblock content %}

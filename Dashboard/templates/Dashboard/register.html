@@ -1,0 +1,12 @@
+{% extends 'global/base.html' %}
+
+{% block content %}
+<main class="content">
+  <div class="form-wrapper">
+
+      <h2>{{ title }}</h2>
+      {% include 'Dashboard/partials/_user-form.html' %}
+      
+    </div>
+  </main>
+{% endblock content %}

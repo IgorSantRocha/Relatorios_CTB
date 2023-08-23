@@ -1,0 +1,28 @@
+{% extends 'global/base.html' %}
+{% block powerbi %}
+
+
+{% if usuario_bko %}
+    {% if links_por_grupo %}
+    <ul>
+        {% for grupo, links in links_por_grupo.items %}
+            {% if grupo.name != 'BKO-CTB' %}
+                <li>
+                    <h2>{{ grupo.name }}</h2>
+                    <ul>
+                        {% for link in links %}
+                            <li><a href="{{ link.link_dashboard }}">{{ link.link_dashboard }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Nenhum link encontrado para os grupos do usuário.</p>
+    {% endif %}
+{% else %}
+    Seu usuário não tem acesso a essa página. Contate o administrador!
+{% endif %}
+
+{% endblock powerbi %}
