@@ -77,8 +77,5 @@ def update_usuario(request):
         )
 
     form.save()
-    return render(
-        request,
-        'Dashboard/register.html',
-        {'form': form},
-    )
+    messages.success(request, 'Usuário atualizado com sucesso!')
+    return redirect('Dashboard:update_usuario')

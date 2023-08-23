@@ -20,7 +20,8 @@ class DashboardLinkForm(forms.ModelForm):
 
     class Meta:
         model = models.DashboardLink
-        fields = 'nome_relatorio', 'group', 'link_dashboard', 'description', 'ativo'
+        fields = 'nome_relatorio', 'group', 'link_dashboard', \
+            'description', 'ativo'
 
     def __init__(self, *args, **kwargs):
         # Pega a solicitação dos argumentos
@@ -122,6 +123,35 @@ class UserUpdateForm(forms.ModelForm):
             'username',
         )
 
+    def save(self, commit=True):
+        cleaned_data = self.cleaned_data
+        user = super().save(commit=False)
+
+        password = cleaned_data.get('password1')
+        if password:
+            user.set_password(password)
+
+        if commit:
+            user.save()
+
+        return user
+
+    def clean(self):
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
+
+        if password1 or password2:
+            if password1 != password2:
+                self.add_error(
+                    'password2',
+                    forms.ValidationError(
+                        'As senhas não batem!',
+                        'invalid'
+                    )
+                )
+
+        return super().clean()
+
     def clean_email(self):
         email = self.cleaned_data.get('email')
         email_atual = self.instance.email
@@ -135,6 +165,8 @@ class UserUpdateForm(forms.ModelForm):
                         code='invalid'
                     )
                 )
+
+        return email
 
     def clean_password1(self):
         password1 = self.cleaned_data.get('password1')
