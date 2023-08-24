@@ -6,6 +6,7 @@ from django.contrib.auth import password_validation
 
 
 class DashboardLinkForm(forms.ModelForm):
+
     link_dashboard = forms.URLField(
         label='Link para o relatório',
     )

@@ -2,15 +2,14 @@
 
 {% block content %}
 <main class="content">
-  <div class="form-wrapper">
-
-      <h2>Login</h2>
+  <div class="form-wrapper">      
       {% if user.is_authenticated %}
         <p>
           Você está logado como <b>{{ user.first_name }}</b>.<br> 
           Clique <a href="{% url 'Dashboard:logout' %}">aqui</a> para sair
         </p>
       {% else %}
+      <h2>Login</h2>
         {% include 'Dashboard/partials/_user-form.html' %}
       {% endif %}
       

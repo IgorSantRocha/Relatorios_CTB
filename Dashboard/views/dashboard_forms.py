@@ -8,7 +8,9 @@ from django.contrib import messages
 def create(request):
     form_action = reverse('Dashboard:create')
     user = request.user
-    usuario_adm = user.groups.filter(name='ADM-CTB').exists()
+    usuario_adm = user.groups.filter(name__in=['SUP-CTB', 'BKO-CTB']).exists()
+    usuario_bko = user.groups.filter(name='BKO-CTB').exists()
+
     template = 'Dashboard/create.html'
 
     if not usuario_adm:
@@ -22,13 +24,14 @@ def create(request):
 
         context = {
             'usuario_adm': usuario_adm,
+            'usuario_bko': usuario_bko,
             'site_title': 'C-Trends BPO - Relatórios',
             'form': form,
             'form_action': form_action
         }
 
         if form.is_valid():
-            form.save()
+            form.save()  # type: ignore
             messages.success(request, 'Novo relatório adicionado com sucesso!')
             return redirect('Dashboard:index')
 
@@ -40,6 +43,7 @@ def create(request):
 
     context = {
         'usuario_adm': usuario_adm,
+        'usuario_bko': usuario_bko,
         'site_title': 'C-Trends BPO - Adicionar relatório',
         # Passa a solicitação para o formulário
         'form': DashboardLinkForm(request=request),
@@ -59,7 +63,8 @@ def update(request, link_id):
     )
     form_action = reverse('Dashboard:update', args=(link_id,))
     user = request.user
-    usuario_adm = user.groups.filter(name='ADM-CTB').exists()
+    usuario_adm = user.groups.filter(name__in=['SUP-CTB', 'BKO-CTB']).exists()
+    usuario_bko = user.groups.filter(name='BKO-CTB').exists()
     template = 'Dashboard/create.html'
 
     if not usuario_adm:
@@ -73,6 +78,7 @@ def update(request, link_id):
 
         context = {
             'usuario_adm': usuario_adm,
+            'usuario_bko': usuario_bko,
             'site_title': 'C-Trends BPO - Relatórios',
             'form': form,
             'form_action': form_action,
@@ -91,6 +97,7 @@ def update(request, link_id):
 
     context = {
         'usuario_adm': usuario_adm,
+        'usuario_bko': usuario_bko,
         'site_title': 'C-Trends BPO - Relatórios',
         'form': DashboardLinkForm(instance=relatorio),
         'form_action': form_action
@@ -105,7 +112,10 @@ def update(request, link_id):
 
 def delete(request, link_id):
     user = request.user
-    usuario_adm = user.groups.filter(name='ADM-CTB').exists()
+    usuario_adm = user.groups.filter(name__in=['SUP-CTB', 'BKO-CTB']).exists()
+    usuario_bko = user.groups.filter(name='BKO-CTB').exists()
+    editar = True
+
     if not usuario_adm:
         return redirect('Dashboard:index')
 
@@ -128,7 +138,9 @@ def delete(request, link_id):
         {
             'link': link,
             'usuario_adm': usuario_adm,
-            'confirmation': confirmation
+            'usuario_bko': usuario_bko,
+            'confirmation': confirmation,
+            'editar': editar
         }
     )
     # relatorio.delete()

@@ -6,9 +6,14 @@ from django.contrib import messages
 
 
 def register(request):
+    user = request.user
     form = RegisterForm()
     title = 'Registrar novo usuário'
 
+    if not user.is_authenticated:
+        raise (
+            'erro'
+        )
     # messages.info(request, 'Essa é a tela de registro de usuário')
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -54,8 +59,11 @@ def logout_usuario(request):
 
 
 def update_usuario(request):
+    user = request.user
     form = UserUpdateForm(instance=request.user)
     title = 'Altere seu usuário'
+    usuario_adm = user.groups.filter(name__in=['SUP-CTB', 'BKO-CTB']).exists()
+    usuario_bko = user.groups.filter(name='BKO-CTB').exists()
 
     if request.method != 'POST':
         return render(
@@ -63,7 +71,9 @@ def update_usuario(request):
             'Dashboard/register.html',
             {
                 'form': form,
-                'title': title
+                'title': title,
+                'usuario_adm': usuario_adm,
+                'usuario_bko': usuario_bko
             },
         )
 

@@ -5,13 +5,11 @@
     <dic class= "single-contact">
         <h1 class= "single-contact-name">{{ link.group }}</h1>
         {% if usuario_adm %}
-        <p><b>Id:</b> {{ link.id }}</p>
         <p><b>Ativo:</b> {{ link.ativo }}</p>
-        <p><b>Link PowerBI:</b> <br>{{ link.link_dashboard }}</p>
         {% endif %}
         <p><b>Tipo relatório:</b> {{ link.nome_relatorio }}</p>
         <p><b>Descrição:</b> {{ link.description }}</p>
-        {% if usuario_adm %}
+        {% if usuario_adm and editar %}
         <div class="contact-links">
             <a class="btn btn-link" href="{% url 'Dashboard:update' link.id %}">Atualizar</a>
             <form action="{% url 'Dashboard:delete' link.id %}" method="POST">

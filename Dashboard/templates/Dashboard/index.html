@@ -10,7 +10,7 @@
             </caption>
             <thead>
                 <tr class="table-row table-row-header">
-                    {% if usuario_adm %}
+                    {% if usuario_adm or usuario_ctb %}
                     <th class="table-header">Contratante</th>
                     {% endif %}
                     <th class="table-header">Tipo relatório</th>
@@ -25,7 +25,7 @@
                 {% for link in links %}
                     
                     <tr class="table-row">
-                        {% if usuario_adm %}
+                        {% if usuario_adm or usuario_ctb %}
                         <td class="table-cel">
                             <a href="{% url 'Dashboard:relatorio' link.id %}" class="table-link">
                                 {{ link.group }}
