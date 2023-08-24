@@ -3,17 +3,17 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import auth
 from Dashboard.forms import RegisterForm, UserUpdateForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url='Dashboard:login')
 def register(request):
-    user = request.user
+    # user = request.user
     form = RegisterForm()
     title = 'Registrar novo usuário'
 
-    if not user.is_authenticated:
-        raise (
-            'erro'
-        )
+    # if not user.is_authenticated:
+    #   print('aaaaaaaaaaaaaaaa')
     # messages.info(request, 'Essa é a tela de registro de usuário')
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -52,12 +52,14 @@ def login_usuario(request):
     )
 
 
+@login_required(login_url='Dashboard:login')
 def logout_usuario(request):
     auth.logout(request)
     messages.info(request, 'Usuário deslogado.')
     return redirect('Dashboard:login')  # type: ignore
 
 
+@login_required(login_url='Dashboard:login')
 def update_usuario(request):
     user = request.user
     form = UserUpdateForm(instance=request.user)

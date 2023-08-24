@@ -3,8 +3,10 @@ from Dashboard.forms import DashboardLinkForm
 from django.urls import reverse
 from Dashboard.models import DashboardLink
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url='Dashboard:login')
 def create(request):
     form_action = reverse('Dashboard:create')
     user = request.user
@@ -57,6 +59,7 @@ def create(request):
     )
 
 
+@login_required(login_url='Dashboard:login')
 def update(request, link_id):
     relatorio = get_object_or_404(
         DashboardLink, pk=link_id
@@ -110,6 +113,7 @@ def update(request, link_id):
     )
 
 
+@login_required(login_url='Dashboard:login')
 def delete(request, link_id):
     user = request.user
     usuario_adm = user.groups.filter(name__in=['SUP-CTB', 'BKO-CTB']).exists()

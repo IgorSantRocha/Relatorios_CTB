@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from Dashboard.models import DashboardLink
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
+@login_required(login_url='Dashboard:login')
 def index(request):
     user = request.user
     usuario_adm = user.groups.filter(name__in=['SUP-CTB', 'BKO-CTB']).exists()
@@ -41,6 +42,7 @@ def index(request):
     )
 
 
+@login_required(login_url='Dashboard:login')
 def relatorio(request, link_id):
     user = request.user
     usuario_adm = user.groups.filter(name='C-TRENDS').exists()
