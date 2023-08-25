@@ -30,6 +30,7 @@ def register(request):
         'Dashboard/register.html',
         {
             'form': form,
+            'site_title': 'Criar usuário - C-Trends BPO!',
             'title': title
         },
     )
@@ -37,19 +38,28 @@ def register(request):
 
 def login_usuario(request):
     form = AuthenticationForm(request)
+    tela_login = True
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
-            auth.login(request, user)
+            auth.login(request, user)  # type: ignore
             messages.success(
-                request, f'Olá, {user.first_name}. Seja bem vindo!')
+                request, f'Olá, {user.first_name}. Seja bem vindo(a)!')
             return redirect('Dashboard:index')
+    placeholders = {
+        'username': {'input_type': 'text', 'placeholder': 'Seu nome de usuário'},
+        'password': {'input_type': 'password', 'placeholder': 'Sua senha'},
+    }
 
     return render(
         request,
         'Dashboard/login.html',
-        {'form': form},
+        {'form': form,
+         'site_title': 'Login - C-Trends BPO!',
+         'tela_login': tela_login,
+         'placeholders': placeholders
+         },
     )
 
 
@@ -75,6 +85,7 @@ def update_usuario(request):
             {
                 'form': form,
                 'title': title,
+                'site_title': 'Atualizar usuário - C-Trends BPO!',
                 'usuario_adm': usuario_adm,
                 'usuario_bko': usuario_bko
             },

@@ -4,6 +4,12 @@
     </h1>
     <nav class="menu">
       <ul class="menu-list">
+        {% if not mostrar_campo_pesquisa and user.is_authenticated%}
+          <li class="menu-item">
+            <a href="{% url 'Dashboard:index' %}" class="menu-link">Home</a>
+          </li>
+        {% endif %}
+        {% if not tela_login %}
         {% if user.is_authenticated %}
           {% if usuario_adm %}
             <li class="menu-item">
@@ -19,9 +25,11 @@
             <a href="{% url 'Dashboard:login' %}" class="menu-link">Logout</a>
           </li>
         {% endif %}
+        {% endif %}
         
       </ul>
     </nav>
+    {% if mostrar_campo_pesquisa %}
     <div class="search">
       <form action="{% url 'Dashboard:search' %}" method="GET">
         <input 
@@ -32,4 +40,5 @@
           name="q">
       </form>
     </div>
+    {% endif %}
   </header>

@@ -47,7 +47,7 @@ def create(request):
     context = {
         'usuario_adm': usuario_adm,
         'usuario_bko': usuario_bko,
-        'site_title': 'C-Trends BPO - Adicionar relatório',
+        'site_title': 'Adicionar relatório - C-Trends BPO!',
         # Passa a solicitação para o formulário
         'form': DashboardLinkForm(request=request),
         'form_action': form_action
@@ -84,7 +84,7 @@ def update(request, link_id):
         context = {
             'usuario_adm': usuario_adm,
             'usuario_bko': usuario_bko,
-            'site_title': 'C-Trends BPO - Relatórios',
+            'site_title': 'Atualizar relatório - C-Trends BPO!',
             'form': form,
             'form_action': form_action,
         }

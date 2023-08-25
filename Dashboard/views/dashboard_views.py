@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from Dashboard.models import DashboardLink
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.core.paginator import Paginator
+
 # Create your views here.
 
 
@@ -13,6 +15,7 @@ def index(request):
     usuario_ctb = user.groups.filter(name='C-TRENDS').exists()
     user_groups = user.groups.all()  # Obtém todos os grupos do usuário
     template = 'Dashboard/index.html'
+    mostrar_campo_pesquisa = True
 
     if usuario_adm:
         links = DashboardLink.objects\
@@ -28,12 +31,18 @@ def index(request):
             .filter(ativo=True, group__in=user_groups)\
             .order_by('id')
 
+    paginator = Paginator(links, 10)  # Show 25 contacts per page.
+
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     context = {
         'usuario_adm': usuario_adm,
         'usuario_bko': usuario_bko,
         'usuario_ctb': usuario_ctb,
-        'links': links,
-        'site_title': 'C-Trends BPO - Relatórios'
+        'page_obj': page_obj,
+        'site_title': 'Relatórios - C-Trends BPO!',
+        'mostrar_campo_pesquisa': mostrar_campo_pesquisa
     }
 
     return render(
@@ -50,6 +59,7 @@ def search(request):
     usuario_bko = user.groups.filter(name='BKO-CTB').exists()
     usuario_ctb = user.groups.filter(name='C-TRENDS').exists()
     user_groups = user.groups.all()  # Obtém todos os grupos do usuário
+    mostrar_campo_pesquisa = True
 
     search_value = request.GET.get('q', '').strip()
     if search_value == '':
@@ -84,12 +94,18 @@ def search(request):
             )\
             .order_by('id')
 
+    paginator = Paginator(links, 20)  # Show 25 contacts per page.
+
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     context = {
         'usuario_adm': usuario_adm,
         'usuario_bko': usuario_bko,
         'usuario_ctb': usuario_ctb,
-        'links': links,
-        'site_title': 'C-Trends BPO - Relatórios'
+        'page_obj': page_obj,
+        'site_title': 'Relatórios - C-Trends BPO!',
+        'mostrar_campo_pesquisa': mostrar_campo_pesquisa
     }
 
     return render(
@@ -127,7 +143,7 @@ def relatorio(request, link_id):
         'usuario_bko': usuario_bko,
         'editar': editar,
         'link': link,
-        'site_title': 'C-Trends BPO - Dashboard'
+        'site_title': link.nome_relatorio + ' - C-Trends BPO!'
     }
 
     return render(

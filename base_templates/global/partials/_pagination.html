@@ -1,0 +1,28 @@
+{% if page_obj and  page_obj.paginator.num_pages > 1 %}
+    <div class="pagination">
+        <ul class="pagination">
+            <li>
+                {% if page_obj.has_previous %}
+                    {% comment "" %}<a class="pagination-link" href="?page=1&q={{ request.GET.q.strip }}">Primeira</a>{% endcomment %}
+                    <a class="pagination-link" href="?page={{ page_obj.previous_page_number }}&q={{ request.GET.q.strip }}">&laquo; </a>
+                {% endif %}
+            </li>
+
+            <li>
+                <!-- Adicione o loop for para exibir os números de página -->
+                {% for num in page_obj.paginator.page_range %}
+                    <a class="pagination-link{% if num == page_obj.number %} active{% endif %}" href="?page={{ num }}&q={{ request.GET.q.strip }}">{{ num }}</a>
+                {% endfor %}
+            </li>
+
+            <li>
+                {% if page_obj.has_next %}
+                    <a class="pagination-link" href="?page={{ page_obj.next_page_number }}&q={{ request.GET.q.strip }}"> &raquo;</a>
+                    {% comment "" %}<a class="pagination-link" href="?page={{ page_obj.paginator.num_pages }}&q={{ request.GET.q.strip }}">Última</a>{% endcomment %}
+                {% endif %}
+            </li>
+
+            
+        </ul>
+    </div>
+{% endif %}

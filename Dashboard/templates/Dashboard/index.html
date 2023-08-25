@@ -2,7 +2,7 @@
 {% block content %}
 <main class="content">
 
-
+    {% if page_obj %}
     <div class="responsive-table">
         <table class="contacts-table">
             <caption class="table-caption">
@@ -22,7 +22,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for link in links %}
+                {% for link in page_obj %}
                     
                     <tr class="table-row">
                         {% if usuario_adm or usuario_ctb %}
@@ -62,7 +62,10 @@
             </tbody>
         </table>
     </div>
-
+    {% else %}
+        <h1>Nenhum relatório foi encontrado para o seu usuário</h1>
+    {% endif %}
+    {% include 'global/partials/_pagination.html' %}
 </main>
 
 {% endblock content %}

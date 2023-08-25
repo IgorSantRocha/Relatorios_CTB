@@ -1,6 +1,6 @@
 {% extends 'global/base.html' %}
 {% block powerbi %}
-
+{% include 'global/partials/_pagination.html' %}
 
 {% if usuario_bko %}
     {% if links_por_grupo %}
@@ -24,5 +24,6 @@
 {% else %}
     Seu usuário não tem acesso a essa página. Contate o administrador!
 {% endif %}
+
 
 {% endblock powerbi %}
