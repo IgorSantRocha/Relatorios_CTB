@@ -35,7 +35,6 @@ def register(request):
 
 def login_usuario(request):
     form = AuthenticationForm(request)
-
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
