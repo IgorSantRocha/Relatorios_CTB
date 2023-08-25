@@ -12,7 +12,6 @@ def index(request):
     usuario_ctb = user.groups.filter(name='C-TRENDS').exists()
     user_groups = user.groups.all()  # Obtém todos os grupos do usuário
     template = 'Dashboard/index.html'
-    print('atenticado =', user.is_authenticated)
 
     if usuario_adm:
         links = DashboardLink.objects\

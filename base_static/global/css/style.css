@@ -54,22 +54,6 @@ svg {
   max-width: 100%;
 }
 
-#id_ativo {
-  transform: scale(0.8); /* Ajuste o valor conforme necessário */
-  vertical-align: left;
-}
-
-#id_ativo::before {
-  content: "";
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border: 1px solid #ccc; /* Adicione um estilo de borda */
-  background-color: white; /* Preenchimento branco */
-  margin-right: 8px; /* Espaçamento entre o checkbox e o rótulo */
-  vertical-align: middle;
-}
-
 .confirmation-message {
   color: red;
   font-weight: bold;
@@ -330,6 +314,7 @@ svg {
 .form-group label {
   font-size: var(--smaller-font-size);
 }
+
 
 .btn {
   background-color: var(--link-dark-color);
