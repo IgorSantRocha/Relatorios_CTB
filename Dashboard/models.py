@@ -6,6 +6,11 @@ class DashboardLink(models.Model):
     class Meta:
         verbose_name = 'Link Dashboard'
         verbose_name_plural = 'Links Dashboards'
+        permissions = [
+            ("pode_editar_relatorio", "Pode editar relatórios"),
+            ("pode_criar_relatorio", "Pode criar relatórios"),
+            ("pode_deletar_relatorio", "Pode apagar relatórios"),
+        ]
 
     group = models.ForeignKey(
         Group,

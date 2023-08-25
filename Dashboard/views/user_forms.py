@@ -4,8 +4,10 @@ from django.contrib import auth
 from Dashboard.forms import RegisterForm, UserUpdateForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 
 
+@user_passes_test(lambda user: user.has_perm('auth.add_user'))
 @login_required(login_url='Dashboard:login')
 def register(request):
     # user = request.user

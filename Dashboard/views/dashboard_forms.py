@@ -3,9 +3,10 @@ from Dashboard.forms import DashboardLinkForm
 from django.urls import reverse
 from Dashboard.models import DashboardLink
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 
+@permission_required('Dashboard.pode_criar_relatorio')
 @login_required(login_url='Dashboard:login')
 def create(request):
     form_action = reverse('Dashboard:create')
@@ -59,6 +60,7 @@ def create(request):
     )
 
 
+@permission_required('Dashboard.pode_editar_relatorio')
 @login_required(login_url='Dashboard:login')
 def update(request, link_id):
     relatorio = get_object_or_404(
@@ -113,6 +115,7 @@ def update(request, link_id):
     )
 
 
+@permission_required('Dashboard.pode_deletar_relatorio')
 @login_required(login_url='Dashboard:login')
 def delete(request, link_id):
     user = request.user
