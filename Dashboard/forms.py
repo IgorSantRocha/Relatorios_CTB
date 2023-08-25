@@ -91,17 +91,19 @@ class RegisterForm(UserCreationForm):
 class UserUpdateForm(forms.ModelForm):
 
     first_name = forms.CharField(
-        min_length=2,
+        label='Nome do usuário',
+        help_text=('Esse é o nome que será exibido na tela. \
+                   Não é possível alterar o user de login'),
+        min_length=5,
         max_length=30,
         required=True,
-        help_text='Required.',
         error_messages={
-            'min_length': 'Please, add more than 2 letters.'
+            'min_length': 'O nome deve ter 5 ou mais letras'
         }
     )
 
     password1 = forms.CharField(
-        label="Password",
+        label="Senha",
         strip=False,
         widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
         help_text=password_validation.password_validators_help_text_html(),
@@ -109,10 +111,10 @@ class UserUpdateForm(forms.ModelForm):
     )
 
     password2 = forms.CharField(
-        label="Password 2",
+        label="Senha 2",
         strip=False,
         widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
-        help_text='Use the same password as before.',
+        help_text='Confirme a nova senha.',
         required=False,
     )
 
@@ -120,8 +122,6 @@ class UserUpdateForm(forms.ModelForm):
         model = User
         fields = (
             'first_name',
-            'email',
-            'username',
         )
 
     def save(self, commit=True):
@@ -153,7 +153,7 @@ class UserUpdateForm(forms.ModelForm):
 
         return super().clean()
 
-    def clean_email(self):
+    '''def clean_email(self):
         email = self.cleaned_data.get('email')
         email_atual = self.instance.email
 
@@ -168,6 +168,7 @@ class UserUpdateForm(forms.ModelForm):
                 )
 
         return email
+    '''
 
     def clean_password1(self):
         password1 = self.cleaned_data.get('password1')

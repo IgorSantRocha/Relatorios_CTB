@@ -6,7 +6,8 @@
       {% if user.is_authenticated %}
         <p>
           Você está logado como <b>{{ user.first_name }}</b>.<br> 
-          Clique <a href="{% url 'Dashboard:logout' %}">aqui</a> para sair
+          Clique <a href="{% url 'Dashboard:logout' %}">aqui</a> para sair.<br> <br> 
+          Ou clique <a href="{% url 'Dashboard:update_usuario' %}">aqui</a> para alterar o seu usuário.
         </p>
       {% else %}
       <h2>Login</h2>

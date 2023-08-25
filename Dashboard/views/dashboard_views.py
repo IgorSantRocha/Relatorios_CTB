@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from Dashboard.models import DashboardLink
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 # Create your views here.
 
 
@@ -25,6 +26,62 @@ def index(request):
     else:
         links = DashboardLink.objects\
             .filter(ativo=True, group__in=user_groups)\
+            .order_by('id')
+
+    context = {
+        'usuario_adm': usuario_adm,
+        'usuario_bko': usuario_bko,
+        'usuario_ctb': usuario_ctb,
+        'links': links,
+        'site_title': 'C-Trends BPO - Relatórios'
+    }
+
+    return render(
+        request,
+        template,
+        context,
+    )
+
+
+@login_required(login_url='Dashboard:login')
+def search(request):
+    user = request.user
+    usuario_adm = user.groups.filter(name__in=['SUP-CTB', 'BKO-CTB']).exists()
+    usuario_bko = user.groups.filter(name='BKO-CTB').exists()
+    usuario_ctb = user.groups.filter(name='C-TRENDS').exists()
+    user_groups = user.groups.all()  # Obtém todos os grupos do usuário
+
+    search_value = request.GET.get('q', '').strip()
+    if search_value == '':
+        return redirect('Dashboard:index')
+
+    template = 'Dashboard/index.html'
+
+    if usuario_adm:
+        links = DashboardLink.objects\
+            .all()\
+            .filter(
+                Q(group__name__icontains=search_value)
+                | Q(nome_relatorio__icontains=search_value)
+            )\
+            .order_by('-id')
+
+    elif usuario_ctb:
+        links = DashboardLink.objects\
+            .filter(
+                Q(ativo=True),
+                Q(group__name__icontains=search_value)
+                | Q(nome_relatorio__icontains=search_value)
+            )\
+            .order_by('id')
+
+    else:
+        links = DashboardLink.objects\
+            .filter(
+                Q(ativo=True),
+                Q(group__in=user_groups)
+                | Q(nome_relatorio__icontains=search_value)
+            )\
             .order_by('id')
 
     context = {

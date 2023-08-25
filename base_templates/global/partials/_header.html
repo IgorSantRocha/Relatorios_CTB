@@ -22,4 +22,14 @@
         
       </ul>
     </nav>
+    <div class="search">
+      <form action="{% url 'Dashboard:search' %}" method="GET">
+        <input 
+          type="search" 
+          class="search-input" 
+          placeholder="Pesquisar",
+          id="search"
+          name="q">
+      </form>
+    </div>
   </header>

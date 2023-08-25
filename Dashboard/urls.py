@@ -7,6 +7,7 @@ app_name = 'Dashboard'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('search/', views.search, name='search'),
 
     # relatorio (CRUD)
     path('relatorio/<int:link_id>/', views.relatorio,
