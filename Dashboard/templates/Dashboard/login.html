@@ -2,7 +2,8 @@
 
 {% block content %}
 <main class="container-login">
-  <div class="card-login">      
+  <div class="card-login">
+        
       {% if user.is_authenticated %}
         <p>
           Você está logado como <b>{{ user.first_name }}</b>.<br> 
@@ -14,10 +15,14 @@
           <a class="btn btn-link" href="{% url 'Dashboard:update_usuario' %}">Alterar senha</a>
       </div>
       {% else %}
-      <h2>Login</h2>
+        <div>
+          <img class="icone" src="../static/global/image/Cores.png">
+        </div> 
+        <h3 class="titulo">Login</h3>  
         {% include 'Dashboard/partials/_user-form.html' %}
       {% endif %}
       
     </div>
+    
   </main>
 {% endblock content %}

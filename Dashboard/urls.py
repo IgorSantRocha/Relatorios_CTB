@@ -10,16 +10,16 @@ urlpatterns = [
     path('search/', views.search, name='search'),
 
     # relatorio (CRUD)
-    path('relatorio/<int:link_id>/', views.relatorio,
+    path('Dashboard/<int:link_id>/', views.relatorio,
          name='relatorio'),  # Visualizar dashboard
 
-    path('relatorio/create', views.create,
+    path('Dashboard/create', views.create,
          name='create'),  # Adicionar nova DB ou relatório
 
-    path('relatorio/<int:link_id>/update/', views.update,
+    path('Dashboard/<int:link_id>/update/', views.update,
          name='update'),  # Atualizar dashboard
 
-    path('relatorio/<int:link_id>/delete/', views.delete,
+    path('Dashboard/<int:link_id>/delete/', views.delete,
          name='delete'),  # Ocultar dashboard
 
 

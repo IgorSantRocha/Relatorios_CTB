@@ -47,10 +47,6 @@ def login_usuario(request):
             messages.success(
                 request, f'Olá, {user.first_name}. Seja bem vindo(a)!')
             return redirect('Dashboard:index')
-    placeholders = {
-        'username': {'input_type': 'text', 'placeholder': 'Seu nome de usuário'},
-        'password': {'input_type': 'password', 'placeholder': 'Sua senha'},
-    }
 
     return render(
         request,
@@ -58,7 +54,6 @@ def login_usuario(request):
         {'form': form,
          'site_title': 'Login - C-Trends BPO!',
          'tela_login': tela_login,
-         'placeholders': placeholders
          },
     )
 
@@ -66,7 +61,7 @@ def login_usuario(request):
 @login_required(login_url='Dashboard:login')
 def logout_usuario(request):
     auth.logout(request)
-    messages.info(request, 'Usuário deslogado.')
+    # messages.info(request, 'Usuário deslogado.')
     return redirect('Dashboard:login')  # type: ignore
 
 

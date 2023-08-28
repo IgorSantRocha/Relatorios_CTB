@@ -1,7 +1,7 @@
 
 body {
 
-	background-image: url('../Estilo/Back.PNG');
+	background-image: url('../image/Back.PNG');
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-attachment: fixed;
@@ -28,7 +28,7 @@ body {
 }
 
 
-img{
+.icone{
 	height: auto;
 	display: flex;
 	position: center;
@@ -36,7 +36,7 @@ img{
 	padding-left: 150px;
 }
 
-h1{
+.titulo{
 	text-align: center;
 	margin-bottom: 20px;
 	color: #272262;

@@ -1,12 +1,18 @@
+{% load static %}
 <header class="header">
     <h1 class="header-heading">
-      <a href="{% url 'Dashboard:index' %}" class="header-link">C-Trends BPO</a>
+      
+      <a href="{% url 'Dashboard:index' %}" class="header-link">
+        <span class="link-text">C-Trends BPO!</span>
+        <img src="{% static 'global/image/Cores.png' %}" alt="Logo da Empresa" class="logo-image">
+      </a>
     </h1>
+    <div class="nav-container">
     <nav class="menu">
       <ul class="menu-list">
         {% if not mostrar_campo_pesquisa and user.is_authenticated%}
           <li class="menu-item">
-            <a href="{% url 'Dashboard:index' %}" class="menu-link">Home</a>
+            <a href="{% url 'Dashboard:index' %}" class="menu-link">Início</a>
           </li>
         {% endif %}
         {% if not tela_login %}
@@ -29,6 +35,7 @@
         
       </ul>
     </nav>
+  
     {% if mostrar_campo_pesquisa %}
     <div class="search">
       <form action="{% url 'Dashboard:search' %}" method="GET">
@@ -41,4 +48,5 @@
       </form>
     </div>
     {% endif %}
+  </div>
   </header>

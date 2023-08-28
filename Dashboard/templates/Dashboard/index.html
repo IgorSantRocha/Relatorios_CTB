@@ -6,9 +6,11 @@
     <div class="responsive-table">
         <table class="contacts-table">
             <caption class="table-caption">
-                Relatórios
+                Relatórios - {{ user.first_name }}
             </caption>
+            
             <thead>
+                
                 <tr class="table-row table-row-header">
                     {% if usuario_adm or usuario_ctb %}
                     <th class="table-header">Contratante</th>
