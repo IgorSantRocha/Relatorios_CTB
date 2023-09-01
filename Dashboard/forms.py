@@ -79,6 +79,7 @@ class RegisterForm(UserCreationForm):
                     code='invalid'
                 )
             )
+        return email
 
     def save(self, commit=True):
         user = super().save(commit=False)

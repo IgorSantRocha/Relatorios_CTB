@@ -44,8 +44,8 @@ def login_usuario(request):
         if form.is_valid():
             user = form.get_user()
             auth.login(request, user)  # type: ignore
-            messages.success(
-                request, f'Olá, {user.first_name}. Seja bem vindo(a)!')
+            '''messages.success(
+                request, f'Olá, {user.first_name}. Seja bem vindo(a)!')'''
             return redirect('Dashboard:index')
 
     return render(

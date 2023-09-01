@@ -11,6 +11,8 @@ Relatorios/local_settings.py
 # Backup files #
 *.bak
 
+web.config
+
 # If you are using PyCharm #
 # User-specific stuff
 .idea/**/workspace.xml

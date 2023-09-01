@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Arquivo de configuração para rodar aplicação no IIS usando HttpPlatformHandler 
+Depois de realizar os ajustes, basta salvar o arquivo na pasta raiz com o nome "web.config"-->
+<configuration>
+    <system.webServer>
+      <validation validateIntegratedModeConfiguration="false" />
+        <!--Altere stdoutLogEnabled para "true" para habilitar o arquivo de log-->
+        <httpPlatform processPath="C:\Python311\python.exe" arguments="C:\inetpub\wwwroot\Pasta_raiz_projeto\manage.py runserver %HTTP_PLATFORM_PORT%" stdoutLogEnabled="false" stdoutLogFile="C:\inetpub\wwwroot\Pasta_raiz_projeto\logs_iis\myapp.log">
+            <environmentVariables>
+                <environmentVariable name="SERVER_PORT" value="%HTTP_PLATFORM_PORT%" />
+            </environmentVariables>
+        </httpPlatform>
+        <handlers>
+            <add name="MyPyHandler" path="*" verb="*" modules="httpPlatformHandler" resourceType="Unspecified" />
+        </handlers>
+    </system.webServer>
+    <appSettings>
+        <!--Os espaços no início do key e do value já estavam aí quando eu copiei o config da internet. Não tentei tirar pois funciona assim. -->
+      <add key=" PYTHONPATH" value=" C:\inetpub\wwwroot\Pasta_raiz_projeto" />  
+      <add key="WSGI_HANDLER" value="django.core.wsgi.get_wsgi_application()" />
+      <add key="DJANGO_SETTINGS_MODULE" value="Nome_Projeto.settings" />
+    </appSettings>
+</configuration>
