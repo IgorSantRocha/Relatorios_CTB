@@ -21,6 +21,8 @@ urlpatterns = [
 
     path('Dashboard/<int:link_id>/delete/', views.delete,
          name='delete'),  # Ocultar dashboard
+    path('Dashboard/<int:link_id>/export/', views.export,
+         name='export'),  # Exportar base dashboard
 
 
     # user

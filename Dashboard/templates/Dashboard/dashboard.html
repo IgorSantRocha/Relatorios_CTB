@@ -9,8 +9,9 @@
         {% endif %}
         <p><b>Tipo relatório:</b> {{ link.nome_relatorio }}</p>
         <p><b>Descrição:</b> {{ link.description }}</p>
-        {% if usuario_adm and editar %}
+        
         <div class="contact-links">
+            {% if usuario_adm and editar %}
             <a class="btn btn-link" href="{% url 'Dashboard:update' link.id %}">Atualizar</a>
             <form action="{% url 'Dashboard:delete' link.id %}" method="POST">
                 {% csrf_token %}
@@ -21,8 +22,9 @@
                     <button class="btn btn-link btn-delete" type="submit">Deletar</button>
                 {% endif %}
             </form>
+            {% endif %}
+            <a class="btn btn-link" href="{% url 'Dashboard:export' link.id %}">Exportar</a>
         </div>
-        {% endif %}
     </div>
 </main>
 <div class="content-frame iframe-container">

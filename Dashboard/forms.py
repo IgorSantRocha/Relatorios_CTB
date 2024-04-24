@@ -18,11 +18,14 @@ class DashboardLinkForm(forms.ModelForm):
         choices=[(True, 'Ativo'), (False, 'Inativo')],
         widget=forms.Select(attrs={'class': 'form-control'})
     )
+    cod_cliente = forms.CharField(
+        label='Código do cliente'
+    )
 
     class Meta:
         model = models.DashboardLink
         fields = 'nome_relatorio', 'group', 'link_dashboard', \
-            'description', 'ativo'
+            'description', 'ativo', 'cod_cliente'
 
     def __init__(self, *args, **kwargs):
         # Pega a solicitação dos argumentos
@@ -54,7 +57,7 @@ class RegisterForm(UserCreationForm):
     first_name = forms.CharField(
         required=True,
         label='Nome completo',
-        min_length=10
+        min_length=2
     )
     email = forms.EmailField(
         required=True,
