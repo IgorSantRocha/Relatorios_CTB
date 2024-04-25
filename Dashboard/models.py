@@ -31,8 +31,8 @@ class DashboardLink(models.Model):
 class RelatoriosBi(models.Model):
     class Meta:
         db_table = 'TB_Relatorios_BI'
-        verbose_name = 'Link Dashboard'
-        verbose_name_plural = 'Links Dashboards'
+        verbose_name = 'Base Dashboard'
+        verbose_name_plural = 'Bases Dashboards'
 
     os = models.CharField(max_length=50, blank=True)
     serial_esperado = models.CharField(max_length=50, blank=True)
