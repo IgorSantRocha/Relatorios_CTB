@@ -49,4 +49,6 @@ class RelatoriosBi(models.Model):
     mesano = models.CharField(max_length=10, blank=True)
     dtentrada = models.DateField(blank=True)
     motivo = models.TextField(blank=True)
+    Data_Limite = models.DateField(blank=True)
+    StatusCliente = models.CharField(max_length=50, blank=True)
     cod_cliente = models.CharField(max_length=100, blank=True)

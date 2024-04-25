@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 import csv
 from django.http import StreamingHttpResponse
+from django.utils.encoding import smart_str
 
 
 @permission_required('Dashboard.pode_criar_relatorio')
@@ -168,6 +169,8 @@ class Echo:
 
 @login_required(login_url='Dashboard:login')
 def export(request, link_id):
+    user = request.user
+    usuario_adm = user.groups.filter(name__in=['SUP-CTB', 'BKO-CTB']).exists()
     dashboard_link = get_object_or_404(DashboardLink, pk=link_id)
     cod_cliente = dashboard_link.cod_cliente
 
@@ -176,12 +179,18 @@ def export(request, link_id):
     """A view that streams a large CSV file."""
 
     # Define o nome do arquivo CSV e as colunas
-    filename = "resultado.csv"
-    columns = ['os', 'serial_esperado', 'serial_chegou',
+    if usuario_adm:
+        group = dashboard_link.group.name.replace(' ', '_')
+        filename = f"AcompanhamentoCarteira{group}.csv"
+    else:
+        filename = "AcompanhamentoCarteira.csv"
+    '''columns = ['os', 'serial_esperado', 'serial_chegou',
                'bordero', 'documento', 'empresa',
                'cep', 'cidade', 'uf',
                'codacao', 'descricao', 'status_caso',
-               'mesano', 'dtentrada', 'motivo']  # Adicione mais colunas conforme necessário
+               'mesano', 'dtentrada', 'motivo']  '''  # Adicione mais colunas conforme necessário
+    columns = [
+        field.name for field in RelatoriosBi._meta.get_fields() if field.name not in ('id', 'cod_cliente')]
 
     def generate_rows():
         # Escreve as colunas no arquivo CSV
@@ -189,18 +198,16 @@ def export(request, link_id):
 
         # Escreve os dados da consulta no arquivo CSV
         for item in queryset:
-            yield [item.os, item.serial_esperado, item.serial_chegou,
-                   item.bordero, item.documento, item.empresa,
-                   item.cep, item.cidade, item.uf,
-                   item.codacao, item.descricao, item.status_caso,
-                   item.mesano, item.dtentrada, item.motivo]  # Adicione mais campos conforme necessário
+            # Use getattr para obter dinamicamente os valores dos campos do modelo
+            row = [getattr(item, field) for field in columns]
+            yield row
 
     pseudo_buffer = Echo()
     writer = csv.writer(pseudo_buffer)
 
     response = StreamingHttpResponse(
         (writer.writerow(row) for row in generate_rows()),
-        content_type="text/csv",
+        content_type="text/csv"
     )
     response['Content-Disposition'] = f'attachment; filename="{filename}"'
 
